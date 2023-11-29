@@ -15,3 +15,5 @@ const CommentSchema = new Schema({
   timestamps: true,
   versionKey: false,
 });
+
+export const CommentModel = model("Comment", CommentSchema);
