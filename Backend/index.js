@@ -14,7 +14,6 @@ const app = express();
 //middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(morgan("dev"));
 app.use(
   cors({
     origin: "*",
@@ -22,10 +21,11 @@ app.use(
   })
 );
 app.use(helmet());
+app.use(morgan("dev"));
 
-//routes
+app.use("/api/post", postRouter);
 
 app.listen(config.port, async () => {
-  await startConnection({ mongo: config.mongo, database: config.database });
+  await startConnection({ uri: config.mongo, database: config.database });
   console.log("server on port htpp://localhost:" + config.port);
 });

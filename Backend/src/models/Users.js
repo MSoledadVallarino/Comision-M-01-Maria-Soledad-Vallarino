@@ -1,5 +1,4 @@
 import { Schema, model } from "mongoose";
-import * as bcrypt from "bcrypt";
 
 const UserSchema = new Schema({
   avatar: {
@@ -28,15 +27,6 @@ const UserSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "Comment",
   },
-});
-
-UserSchema.pre("save", async function (next) {
-  if (!this.isModified("password")) return next();
-
-  const hash = await bcrypt.hash(this.password, 10);
-
-  this.password = hash;
-  next();
 });
 
 export const UserModel = model("User", UserSchema);

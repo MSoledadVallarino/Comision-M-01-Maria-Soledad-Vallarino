@@ -1,10 +1,9 @@
 import { connect } from "mongoose";
-import { config } from "./config.js";
 
-export const startConnection = async () => {
+export const startConnection = async ({ uri, database }) => {
   try {
-    const db = await connect(config.mongo, {
-      dbName: config.database,
+    const db = await connect(uri, {
+      dbName: database,
     });
 
     console.log(`DB is connected to ${db.connection.name} database`);

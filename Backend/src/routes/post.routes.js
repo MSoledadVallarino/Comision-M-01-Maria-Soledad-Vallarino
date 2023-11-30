@@ -13,7 +13,7 @@ const postRouter = Router();
 postRouter.get("/", ctrlListPost);
 
 //crear un nuevo posteo
-postRouter.post("/:postId", ctrlCreatePost);
+postRouter.post("/", ctrlCreatePost);
 
 //traer un posteo, modificarlo y borrarlo
 postRouter.get("/:postId", ctrlGetPost);
