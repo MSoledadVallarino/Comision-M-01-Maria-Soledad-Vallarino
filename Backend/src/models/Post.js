@@ -13,7 +13,7 @@ const PostSchema = new Schema({
     maxLength: 5000,
     minLength: 100,
   },
-  autor: {
+  author: {
     type: Schema.Types.ObjectId,
     ref: "User",
     required: true,
