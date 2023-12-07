@@ -4,10 +4,15 @@ import {
   ctrlLoginUser,
 } from "../controllers/user.controller,js";
 
+import {
+  loginUserValidation,
+  createUserValidations,
+} from "../models/validations/user-validations.js";
+
 const authRouter = Router();
 
-userRouter.post("/login", ctrlLoginUser);
+userRouter.post("/login", loginUserValidation, ctrlLoginUser);
 
-userRouter.post("/register", ctrlCreateUser);
+userRouter.post("/register", createUserValidations, ctrlCreateUser);
 
 export { authRouter };

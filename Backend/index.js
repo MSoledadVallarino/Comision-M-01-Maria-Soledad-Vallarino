@@ -10,6 +10,8 @@ import { startConnection } from "./src/settings/database.js";
 import { authRouter } from "./src/routes/auth.routes.js";
 import { commentRouter } from "./src/routes/comment.routes,js";
 import { postRouter } from "./src/routes/post.routes.js";
+import { validateToken } from "./src/middlewares/validate-token.js";
+import { authHeader } from "./src/models/validations/auth-validation.js";
 
 const app = express();
 
@@ -25,9 +27,9 @@ app.use(
 app.use(helmet());
 app.use(morgan("dev"));
 
-app.use("/api/user", authRouter);
-app.use("/api/post", postRouter);
-app.use("/api/comment", commentRouter);
+app.use("/api/auth", authRouter);
+app.use("/api/post", authHeader, validateToken, postRouter);
+app.use("/api/comment", authHeader, validateToken, commentRouter);
 
 app.listen(config.port, async () => {
   await startConnection({ uri: config.mongo, database: config.database });
