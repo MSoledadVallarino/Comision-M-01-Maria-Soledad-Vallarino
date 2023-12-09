@@ -25,7 +25,7 @@ postRouter.post("/", createPostValidator, ctrlCreatePost);
 
 //traer un posteo, modificarlo y borrarlo
 postRouter.get("/:postId", getPostValidator, ctrlGetPost);
-postRouter.put("/:postId", updatePostValidator, ctrlUpdatePost);
+postRouter.patch("/:postId", updatePostValidator, ctrlUpdatePost);
 postRouter.delete("/:postId", deletePostValidator, ctrlDeletePost);
 
 export { postRouter };

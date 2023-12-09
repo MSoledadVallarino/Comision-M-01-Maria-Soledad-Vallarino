@@ -2,7 +2,7 @@ import { body } from "express-validator";
 import { applyValidator } from "../../middlewares/apply-validation.js";
 import { UserModel } from "../Users.js";
 
-export const createUserValidations = async (req, res) => [
+export const createUserValidations = [
   body("avatar")
     .notEmpty()
     .withMessage("El campo {avatar} no puede estar vacio")

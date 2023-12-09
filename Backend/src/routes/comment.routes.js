@@ -8,16 +8,32 @@ import {
   ctrlDeleteComment,
 } from "../controllers/comment.controller.js";
 
+import {
+  createCommentValidator,
+  listCommentValidator,
+  getCommentValidator,
+  updateCommentValidator,
+  deleteCommentValidator,
+} from "../models/validations/comment-validations.js";
+
 const commentRouter = Router();
 
-commentRouter.post("/:postId/", ctrlCreateComment);
+commentRouter.post("/:postId/", createCommentValidator, ctrlCreateComment);
 
-commentRouter.get("/:postId/", ctrlListComment);
+commentRouter.get("/:postId/", listCommentValidator, ctrlListComment);
 
-commentRouter.get("/:postId/:commentId/", ctrlGetComment);
+commentRouter.get("/:postId/:commentId/", getCommentValidator, ctrlGetComment);
 
-commentRouter.put("/:postId/:commentId/", ctrlUpdateComment);
+commentRouter.patch(
+  "/:postId/:commentId/",
+  updateCommentValidator,
+  ctrlUpdateComment
+);
 
-commentRouter.delete("/:postId/:commentId/", ctrlDeleteComment);
+commentRouter.delete(
+  "/:postId/:commentId/",
+  deleteCommentValidator,
+  ctrlDeleteComment
+);
 
 export { commentRouter };
