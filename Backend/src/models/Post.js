@@ -12,7 +12,7 @@ const PostSchema = new Schema(
       type: String,
       required: true,
       maxLength: 5000,
-      minLength: 100,
+      minLength: 10,
     },
     author: {
       type: Schema.Types.ObjectId,
@@ -27,7 +27,7 @@ const PostSchema = new Schema(
       },
     ],
 
-    imageUrl: {
+    imageURL: {
       type: String,
       required: true,
     },

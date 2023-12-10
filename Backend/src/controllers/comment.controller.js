@@ -2,21 +2,39 @@ import { CommentModel } from "../models/Comment.js";
 import { PostModel } from "../models/Post.js";
 
 export const ctrlCreateComment = async (req, res) => {
-  const postId = req.params;
+  const userId = req.user._id;
+  const { postId } = req.params;
+
   try {
-    const comment = new CommentModel(req.body);
+    const comment = new CommentModel({
+      ...req.body,
+      author: userId,
+      post: postId,
+    });
+
     await comment.save();
+
+    await PostModel.findByIdAndUpdate(
+      { _id: postId },
+      { $push: { comments: comment._id } }
+    );
+
     res.status(201).json(comment);
   } catch (error) {
-    res.status(500).json({ error: "No se puede crear el comentario" });
+    console.log(error);
+    res.status(500).json({ error: "No se pudo crear el comentario" });
   }
 };
 
 export const ctrlListComment = async (req, res) => {
-  const postId = req.params;
+  const { postId } = req.params;
+  const userId = req.user._id;
   try {
-    const comment = await CommentModel.find({ post: postId });
-    res.status(200).json(comment);
+    const comments = await CommentModel.find({ post: postId }, [
+      "-__v",
+    ]).populate("post", ["-comments", "-author", "-__v"]);
+
+    res.status(200).json(comments);
   } catch (error) {
     res.status(500).json({ error: "No se pudo encontrar los comentarios" });
   }

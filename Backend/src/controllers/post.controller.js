@@ -3,14 +3,15 @@ import { CommentModel } from "../models/Comment.js";
 
 export const ctrlCreatePost = async (req, res) => {
   const userId = req.user._id;
+
   try {
-    const { title } = req.body;
+    const { title, description, imageURL } = req.body;
 
     const post = new PostModel({
       title,
       description,
-      autor: userId,
-      imageUrl,
+      imageURL,
+      author: userId,
     });
 
     await post.save();
@@ -25,7 +26,7 @@ export const ctrlListPost = async (req, res) => {
   const userId = req.user._id;
 
   try {
-    const post = await PostModel.find({ author: userId })
+    const posts = await PostModel.find({ author: userId })
       .populate("author", ["username", "avatar"])
       .populate("comments", ["author", "description"]);
 
@@ -62,9 +63,9 @@ export const ctrlUpdatePost = async (req, res) => {
   const { postId } = req.params;
 
   try {
-    const post = PostModel.findOneAndUpdate({
+    const post = await PostModel.findOne({
       _id: postId,
-      user: userId,
+      author: userId,
     });
 
     if (!post) {
@@ -86,9 +87,9 @@ export const ctrlDeletePost = async (req, res) => {
   const { postId } = req.params;
 
   try {
-    const post = PostModel.findOneAndDelete({
+    const post = await PostModel.findOne({
       _id: postId,
-      user: userId,
+      author: userId,
     });
 
     if (!post) {
@@ -96,7 +97,7 @@ export const ctrlDeletePost = async (req, res) => {
     }
     await PostModel.findOneAndDelete({
       _id: postId,
-      user: userId,
+      author: userId,
     });
 
     return res.status(200).json(post);

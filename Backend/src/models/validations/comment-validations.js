@@ -1,4 +1,4 @@
-import { param, body } from "express-validator";
+import { body, param } from "express-validator";
 import { isValidObjectId } from "mongoose";
 import { applyValidator } from "../../middlewares/apply-validation.js";
 
@@ -65,5 +65,12 @@ export const deleteCommentValidator = [
     .withMessage("El campo {description} debe ser un string")
     .custom(isValidObjectId)
     .withMessage("El parametro {postId} debe ser un id valida"),
+  param("commentId")
+    .notEmpty()
+    .withMessage("El parametro {commentId} no debe estar vacio")
+    .isString()
+    .withMessage("El parametro { commentId } debe ser un string")
+    .custom(isValidObjectId)
+    .withMessage("El parametro { commentId } debe ser una Id valida"),
   applyValidator,
 ];

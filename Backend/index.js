@@ -21,7 +21,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(
   cors({
     origin: "*",
-    methods: ["GET", "POST", "PUT", "DELETE"],
+    methods: ["GET", "POST", "PATCH", "DELETE"],
   })
 );
 app.use(helmet());

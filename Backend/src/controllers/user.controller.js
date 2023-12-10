@@ -22,12 +22,14 @@ export const ctrlLoginUser = async (req, res) => {
     }
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res.status(401).json({ error: "Las credenciales incorrectas" });
+      return res
+        .status(401)
+        .json({ error: "Las credenciales son incorrectas" });
     }
 
     const token = await createJWT({ userId: user._id });
     res.status(200).json({ token, user });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ error: "El usuario no pudo loguearse" });
   }
 };

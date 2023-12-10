@@ -12,7 +12,7 @@ export const createJWT = async ({ userId }) => {
 
 export const verifyJWT = async ({ token }) => {
   return new Promise((res, rej) => {
-    jwt.verify(tokebn, config.jwt_Secret, (err, decoded) => {
+    jwt.verify(token, config.jwt_secret, (err, decoded) => {
       if (err || !decoded.userId) rej("Invalid token");
       res(decoded);
     });
