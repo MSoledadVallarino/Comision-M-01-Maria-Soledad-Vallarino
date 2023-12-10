@@ -8,7 +8,7 @@ export const createCommentValidator = [
     .withMessage("El parametro {postId} no debe estar vacio")
     .isString()
     .withMessage("El parametro {postId} debe ser un string")
-    .mongoose(isValidObjectId)
+    .custom(isValidObjectId)
     .withMessage("El parametro {postId} debe ser un id valida"),
   body("description")
     .notEmpty()
@@ -24,7 +24,7 @@ export const listCommentValidator = [
     .withMessage("El parametro {postId} no puede estar vacio")
     .isString()
     .withMessage("El parametro {postId} debe ser un string")
-    .mongoose(isValidObjectId)
+    .custom(isValidObjectId)
     .withMessage("El parametro {postId} debe ser un id valida"),
   applyValidator,
 ];
@@ -35,7 +35,7 @@ export const getCommentValidator = [
     .withMessage("El parametro {postId} no puede estar vacio")
     .isString()
     .withMessage("El parametro {postId} debe ser un string")
-    .mongoose(isValidObjectId)
+    .custom(isValidObjectId)
     .withMessage("El parametro {postId} debe ser un id valida"),
   applyValidator,
 ];
@@ -46,7 +46,7 @@ export const updateCommentValidator = [
     .withMessage("El parametro {postId} no debe estar vacio")
     .isString()
     .withMessage("El parametro {postId} debe ser un string")
-    .mongoose(isValidObjectId)
+    .custom(isValidObjectId)
     .withMessage("El parametro {postId} debe ser un id valida"),
   body("description")
     .optional()
@@ -63,7 +63,7 @@ export const deleteCommentValidator = [
     .withMessage("El parametro {postId} no debe estar vacio")
     .isString()
     .withMessage("El campo {description} debe ser un string")
-    .mongoose(isValidObjectId)
+    .custom(isValidObjectId)
     .withMessage("El parametro {postId} debe ser un id valida"),
   applyValidator,
 ];

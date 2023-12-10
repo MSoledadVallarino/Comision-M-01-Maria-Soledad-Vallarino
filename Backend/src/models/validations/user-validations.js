@@ -8,7 +8,7 @@ export const createUserValidations = [
     .withMessage("El campo {avatar} no puede estar vacio")
     .isString()
     .withMessage("El campo {avatar} debe ser un string")
-    .isUrl()
+    .isURL()
     .withMessage("El campo {avatar} debe ser un URL valida"),
 
   body("email")
@@ -18,11 +18,8 @@ export const createUserValidations = [
     .withMessage("El campo {email} debe ser un email valido")
     .custom(async (value) => {
       const user = await UserModel.findOne({ email: value });
-      if (user) {
-        return res
-          .status(400)
-          .json({ error: "El email ya se encuentra registrado" });
-      }
+      if (user) throw new Error("El email ya se encuentra registrado");
+      return true;
     }),
 
   body("username")
@@ -34,11 +31,8 @@ export const createUserValidations = [
     .withMessage("El campo {username} debe tener al menos 5 caracteres")
     .custom(async (value) => {
       const user = await UserModel.findOne({ username: value });
-      if (user) {
-        return res
-          .status(400)
-          .json({ error: "El username ya se encuentra registrado" });
-      }
+      if (user) throw new Error("El username ya se encuentra registrado");
+      return true;
     }),
 
   body("password")

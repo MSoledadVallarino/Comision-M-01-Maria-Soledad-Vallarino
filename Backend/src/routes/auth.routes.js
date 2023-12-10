@@ -2,7 +2,7 @@ import { Router } from "express";
 import {
   ctrlCreateUser,
   ctrlLoginUser,
-} from "../controllers/user.controller,js";
+} from "../controllers/user.controller.js";
 
 import {
   loginUserValidation,
@@ -11,7 +11,7 @@ import {
 
 const authRouter = Router();
 
-authRouterRouter.post("/login", loginUserValidation, ctrlLoginUser);
+authRouter.post("/login", loginUserValidation, ctrlLoginUser);
 
 authRouter.post("/register", createUserValidations, ctrlCreateUser);
 

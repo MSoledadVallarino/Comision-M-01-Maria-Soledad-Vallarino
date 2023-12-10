@@ -8,7 +8,7 @@ import { config } from "./src/settings/config.js";
 import { startConnection } from "./src/settings/database.js";
 
 import { authRouter } from "./src/routes/auth.routes.js";
-import { commentRouter } from "./src/routes/comment.routes,js";
+import { commentRouter } from "./src/routes/comment.routes.js";
 import { postRouter } from "./src/routes/post.routes.js";
 import { validateToken } from "./src/middlewares/validate-token.js";
 import { authHeader } from "./src/models/validations/auth-validation.js";
@@ -33,5 +33,5 @@ app.use("/api/comment", authHeader, validateToken, commentRouter);
 
 app.listen(config.port, async () => {
   await startConnection({ uri: config.mongo, database: config.database });
-  console.log("server on port htpp://localhost:" + config.port);
+  console.log("server on port http://localhost:" + config.port);
 });
