@@ -8,8 +8,8 @@ export const ctrlCreateComment = async (req, res) => {
   try {
     const comment = new CommentModel({
       ...req.body,
-      author: userId,
       post: postId,
+      author: userId,
     });
 
     await comment.save();
@@ -21,18 +21,18 @@ export const ctrlCreateComment = async (req, res) => {
 
     res.status(201).json(comment);
   } catch (error) {
-    console.log(error);
     res.status(500).json({ error: "No se pudo crear el comentario" });
   }
 };
 
 export const ctrlListComment = async (req, res) => {
   const { postId } = req.params;
-  const userId = req.user._id;
+  const userId = req.user.id;
+
   try {
     const comments = await CommentModel.find({ post: postId }, [
       "-__v",
-    ]).populate("post", ["-comments", "-author", "-__v"]);
+    ]).populate("post", ["-comments", "-__v"]);
 
     res.status(200).json(comments);
   } catch (error) {
@@ -41,34 +41,58 @@ export const ctrlListComment = async (req, res) => {
 };
 
 export const ctrlGetComment = async (req, res) => {
-  const commentId = req.params;
+  const { commentId, postId } = req.params;
+  const userId = req.user.id;
+
   try {
-    const comment = await CommentModel.findOne({ _id: commentId });
+    const comment = await CommentModel.findOne({
+      _id: commentId,
+      post: postId,
+    }).populate("post");
+
+    if (!comment) {
+      return res.status(404).json({ error: "No existe el comentario" });
+    }
     res.status(200).json(comment);
   } catch (error) {
-    res.status(404).json({ error: "No existe el comentario" });
+    res.status(500).json({ error: "No se pudo encontrar el comentario" });
   }
 };
 
 export const ctrlUpdateComment = async (req, res) => {
+  const { commentId, postId } = req.params;
   const userId = req.user._id;
-  const commentId = req.params;
+
   try {
-    const comment = CommentModel.findOneAndUpdate({ _id: commentId }, req.body);
+    const comment = await CommentModel.findOne({ _id: commentId });
+
+    if (!comment) {
+      return res.status(404).json({ error: "No existe el comentario" });
+    }
+    comment.set(req.body);
+
+    await comment.save();
+
     res.status(200).json(comment);
   } catch (error) {
-    res.status(404).json({ error: "No existe el comentario" });
+    res.status(404).json({ error: "No se pudo actualizar el comentario" });
   }
 };
 
 export const ctrlDeleteComment = async (req, res) => {
-  const commentId = req.params;
+  const { commentId, postId } = req.params;
   const userId = req.user._id;
 
   try {
-    const comment = CommentModel.findOneAndDelete({ _id: commentId });
-    res.status(200).json(comment);
+    await CommentModel.findOneAndDelete({ _id: commentId, post: postId });
+
+    await PostModel.findOneAndUpdate(
+      { _id: postId },
+      { $pull: { comments: commentId } }
+    );
+
+    res.status(200).json();
   } catch (error) {
-    res.status(404).json({ error: "No existe el comentario" });
+    res.status().json({ error: "No se pudo eliminar el comentario" });
   }
 };

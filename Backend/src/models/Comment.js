@@ -2,16 +2,21 @@ import { Schema, model } from "mongoose";
 
 const CommentSchema = new Schema(
   {
+    description: {
+      type: String,
+      maxLength: 1000,
+      minLength: 10,
+    },
+
     author: {
       type: Schema.Types.ObjectId,
       ref: "User",
       required: true,
     },
-
-    description: {
-      type: String,
-      maxLength: 1000,
-      minLength: 10,
+    post: {
+      type: Schema.Types.ObjectId,
+      ref: "Post",
+      required: true,
     },
   },
   {
