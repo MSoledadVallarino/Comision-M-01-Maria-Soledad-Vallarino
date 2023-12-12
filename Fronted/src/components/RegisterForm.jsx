@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { API_URL } from "../../utils/const";
+import { API_URL } from "../utils/const";
 
 function RegisterForm() {
   const ref = useRef(null);

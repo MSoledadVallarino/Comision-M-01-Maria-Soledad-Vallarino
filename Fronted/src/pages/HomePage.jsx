@@ -1,7 +1,15 @@
-import React from "react";
+import { useContext } from "react";
+import { AuthContex } from "../providers/AuthProvider";
 
 function HomePage() {
-  return <div>HomePage</div>;
+  const { logout } = useContext(AuthContex);
+
+  return (
+    <div>
+      <h1>Homepage</h1>
+      <button onClick={logout}>LOGOUT</button>
+    </div>
+  );
 }
 
 export default HomePage;
