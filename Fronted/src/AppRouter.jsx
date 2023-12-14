@@ -9,14 +9,12 @@ function AppRouter() {
   return (
     <Routes>
       {/* Rutas Protegidas */}
-      <Route element={<PrivateRoutes />}>
-        <Route path="/" element={<HomePage />} />
-      </Route>
+      <Route element={<PrivateRoutes />}></Route>
 
       {/* Rutas Públicas */}
       <Route path="/login" element={<LoginForm />} />
       <Route path="/register" element={<RegisterForm />} />
-
+      <Route path="/" element={<HomePage />} />
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );

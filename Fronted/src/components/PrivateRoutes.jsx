@@ -1,9 +1,9 @@
 import { useContext, useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
-import AuthContex from "../providers/AuthProvider";
+import { AuthContex } from "../providers/AuthProvider";
 
 function PrivateRoutes() {
-  const { auth } = useContext(AuthContext);
+  const { auth } = useContext(AuthContex);
   const navigate = useNavigate();
 
   useEffect(() => {

@@ -1,11 +1,16 @@
-import { useRef } from "react";
+import styles from "../styles/AuthForm.module.css";
+import { useId, useRef } from "react";
 import { API_URL } from "../utils/const.js";
 import { useContext } from "react";
 import { AuthContex } from "../providers/AuthProvider";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function LoginForm() {
   const ref = useRef(null);
+
+  const emailRef = useId();
+  const passwordRef = useId();
 
   const { login } = useContext(AuthContex);
   const navigate = useNavigate();
@@ -48,11 +53,33 @@ function LoginForm() {
   return (
     <div>
       <h2>Login</h2>
-      <form onSubmit={handleSubmit} ref={ref}>
-        <input type="email" placeholder="Email" name="email" />
-        <input type="password" placeholder="password" name="password" />
-        <button type="submit">Login</button>
-      </form>
+      <div className="{styles.fondo">
+        <form onSubmit={handleSubmit} ref={ref} className={styles.form}>
+          <div className={styles.inputGroup}>
+            <label htmlFor={emailRef}>Email:</label>
+            <input
+              type="email"
+              placeholder="my-email@email.com"
+              name="email"
+              id={emailRef}
+            />
+          </div>
+
+          <div className={styles.inputGroup}>
+            <label htmlFor={passwordRef}>Password:</label>
+            <input
+              type="password"
+              placeholder="*******"
+              name="password"
+              id={passwordRef}
+            />
+          </div>
+
+          <button>Login</button>
+        </form>
+
+        <Link to={"/"}>Volver a la pagina principal</Link>
+      </div>
     </div>
   );
 }

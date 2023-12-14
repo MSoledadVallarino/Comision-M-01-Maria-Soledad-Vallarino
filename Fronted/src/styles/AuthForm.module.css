@@ -1,0 +1,43 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 100px 70px;
+  border-radius: 25px;
+  background-color: #e9e1fa;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  width: 450px;
+  text-align-last: center;
+}
+
+.inputGroup > input {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 15px;
+  border: 1px solid #f6a1ec;
+  align-items: center;
+}
+
+.inputGroup > label {
+  font-weight: bold;
+}
+
+.form > button {
+  width: 100%;
+  padding: 15px;
+  margin: 15px 0;
+  border-radius: 12px;
+  border: 1px solid #77dbe4;
+  background-color: #b6e4f4;
+  cursor: pointer;
+}
+
+.form > button:hover {
+  background-color: #ecb0f6;
+}

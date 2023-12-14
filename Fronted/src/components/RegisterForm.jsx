@@ -1,7 +1,8 @@
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { API_URL } from "../utils/const";
-
+import styles from "../styles/AuthForm.module.css";
+import { Link } from "react-router-dom";
 function RegisterForm() {
   const ref = useRef(null);
 
@@ -31,7 +32,7 @@ function RegisterForm() {
       },
     });
 
-    if (req.status !== 201) return alert("Error al registrar el usuario");
+    if (req.status !== 201) return alert("No es posible crear el usuario");
     ref.current.reset();
 
     navigate("/login");
@@ -39,14 +40,23 @@ function RegisterForm() {
 
   return (
     <div>
-      <h2>Register</h2>
-      <form onSubmit={handleSubmit} ref={ref}>
-        <input type="url" placeholder="www.Avatar.com" name="avatar" />
-        <input type="email" placeholder="Email" name="email" />
-        <input type="text" placeholder="Username" name="username" />
-        <input type="password" placeholder="password" name="password" />
-        <button type="submit">Register</button>
+      <h2>Registro</h2>
+      <form onSubmit={handleSubmit} ref={ref} className={styles.form}>
+        <div className={styles.inputGroup}>
+          <input type="url" placeholder="www.avatar.com" name="avatar" />
+        </div>
+        <div className={styles.inputGroup}>
+          <input type="email" placeholder="Direccion de email" name="email" />
+        </div>
+        <div className={styles.inputGroup}>
+          <input type="text" placeholder="Nombre de usuario" name="username" />
+        </div>
+        <div className={styles.inputGroup}>
+          <input type="password" placeholder="Contraseña" name="password" />
+        </div>
+        <button>Registrarse</button>
       </form>
+      <Link to={"/"}>Volver a la pagina principal</Link>
     </div>
   );
 }

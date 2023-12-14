@@ -8,7 +8,7 @@ export const ctrlCreateUser = async (req, res) => {
     await user.save();
     res.status(201).json(user);
   } catch (error) {
-    res.status(500).json({ error: "No se puede crear el usuario" });
+    res.status(500).json({ error: error.message });
   }
 };
 
